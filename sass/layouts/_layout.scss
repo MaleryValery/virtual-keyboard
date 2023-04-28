@@ -1,20 +1,26 @@
 .key {
     width: 6%;
-    background-color: #444;
-    color: #eee;
+    background-color: #51424F;
+    color: #FEFEDF;
     border-radius: 4px;
     transition: all 0.3s;
     display: flex;
     padding: 0.8rem 0.5rem;
 
     &:hover {
-        background-color: #555;
+        background-color: #827280;
         cursor: pointer;
     }
 
     &:active {
-        transform: scale(0.98);
-        background-color: #555;
+        transform: scale(0.97);
+        background-color: #827280;
+        cursor: pointer;
+    }
+
+    &.active {
+        transform: scale(0.97);
+        background-color: #827280;
         cursor: pointer;
     }
 
@@ -29,6 +35,16 @@
         flex-grow: 0;
     }
 }
+.keybord__row:nth-child(2){
+    .key{
+        flex-grow: 0;
+        flex-basis: 6.1%;
+    }
+    .key.special{
+        flex-grow: 1;
+        flex-basis: 6%;
+    }
+}
 
 .keybord__row:last-child {
 
@@ -37,25 +53,28 @@
     }
 
     .key.special:nth-child(1) {
-        flex-basis: 2%;
+        flex-basis: 4%;
     }
 
     .key.special:nth-child(2) {
-        flex-basis: 4%;
+        flex-basis: 3%;
     }
 
     .key.special:nth-child(3) {
-        flex-basis: 4%;
-    }
-    .key.special:nth-child(4) {
-        flex-basis: 6.5%;
+        flex-basis: 6%;
     }
     .key.special:nth-child(5) {
-        flex-basis: 14rem;
+        flex-basis: 6%;
+    }
+    .key.special:nth-child(4) {
+        flex-basis: 18rem;
     }
     .key.special:nth-child(6) {
-        flex-basis: 6.5%;
+        flex-basis: 3%;
     }
+    // &.upper-case{
+    //     text-transform: lowercase;
+    // }
 }
 
 .keybord__row:not(:last-child) {
@@ -70,9 +89,6 @@
     justify-content: space-between;
     height: 4rem;
 
-    &:first-child {
-        display: none;
-    }
 }
 
 .hide {
@@ -102,3 +118,10 @@
         grid-row: 2/2;
     }
 }
+
+// .upper-case{
+//     text-transform: uppercase;
+// }
+// .lower-case{
+//     text-transform: lowercase;
+// }
