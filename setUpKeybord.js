@@ -198,9 +198,11 @@ const upperCaseAll = document.querySelectorAll('.upper-case');
 const lowerCaseAll = document.querySelectorAll('.lower-case');
 const capsAll = document.querySelectorAll('.caps-lock');
 const shiftCapsAll = document.querySelectorAll('.shift-caps');
+let isCapsPressed;
 
 function pressDown(e) {
-   console.log(e);
+  isCapsPressed = e.getModifierState('CapsLock');
+  console.log(e.getModifierState('Shift'));
   keysAll.forEach((element) => {
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
@@ -211,23 +213,16 @@ function pressDown(e) {
           lowerCaseAll.forEach((span) => {
             span.classList.add('hide');
           });
-          if (e.key === 'CapsLock') {
-            upperCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            capsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-          }
+          capsAll.forEach((span) => {
+            span.classList.add('hide');
+          });
+          shiftCapsAll.forEach((span) => {
+            span.classList.add('hide');
+          });
         } else if (e.key === 'Tab') {
           element.classList.add('active');
         } else if (e.key === 'CapsLock') {
+          isCapsPressed = true;
           capsAll.forEach((span) => {
             span.classList.remove('hide');
           });
@@ -240,20 +235,6 @@ function pressDown(e) {
           shiftCapsAll.forEach((span) => {
             span.classList.add('hide');
           });
-          if (e.key === 'Shift') {
-            capsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            upperCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-          }
         }
         element.classList.add('active');
       }
@@ -264,24 +245,30 @@ function pressDown(e) {
 
 function pressUp(e) {
   keysAll.forEach((element) => {
-    // console.log(element);
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
         if (e.key === 'Shift') {
-          upperCaseAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          lowerCaseAll.forEach((span) => {
-            span.classList.remove('hide');
-          });
-          if (e.key === 'CapsLock') {
+          if (isCapsPressed === false) {
             upperCaseAll.forEach((span) => {
               span.classList.add('hide');
+            });
+            lowerCaseAll.forEach((span) => {
+              span.classList.remove('hide');
             });
             capsAll.forEach((span) => {
               span.classList.add('hide');
             });
+            shiftCapsAll.forEach((span) => {
+              span.classList.add('hide');
+            });
+          } else {
+            upperCaseAll.forEach((span) => {
+              span.classList.add('hide');
+            });
             lowerCaseAll.forEach((span) => {
+              span.classList.add('hide');
+            });
+            capsAll.forEach((span) => {
               span.classList.remove('hide');
             });
             shiftCapsAll.forEach((span) => {
@@ -291,6 +278,7 @@ function pressUp(e) {
         } else if (e.key === 'Tab') {
           element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
+          isCapsPressed = false;
           capsAll.forEach((span) => {
             span.classList.add('hide');
           });
@@ -303,15 +291,15 @@ function pressUp(e) {
           shiftCapsAll.forEach((span) => {
             span.classList.add('hide');
           });
-          if (e.key === 'Shift') {
+          if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             capsAll.forEach((span) => {
-              span.classList.remove('hide');
+              span.classList.add('hide');
             });
             lowerCaseAll.forEach((span) => {
               span.classList.add('hide');
             });
             upperCaseAll.forEach((span) => {
-              span.classList.add('hide');
+              span.classList.remove('hide');
             });
             shiftCapsAll.forEach((span) => {
               span.classList.add('hide');
