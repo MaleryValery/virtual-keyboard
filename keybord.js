@@ -890,7 +890,7 @@ const keybord = [
       },
     },
     {
-      className: 'ArrowUp special',
+      className: 'ArrowUp special arrow',
       enLg: {
         caps: ' ↑ ',
         lowerCase: ' ↑ ',
@@ -905,7 +905,7 @@ const keybord = [
       },
     },
     {
-      className: 'ArrowLeft special',
+      className: 'ArrowLeft special arrow',
       enLg: {
         caps: ' ← ',
         lowerCase: ' ← ',
@@ -920,7 +920,7 @@ const keybord = [
       },
     },
     {
-      className: 'ArrowDown special',
+      className: 'ArrowDown special arrow',
       enLg: {
         caps: ' ↓ ',
         lowerCase: ' ↓ ',
@@ -935,7 +935,7 @@ const keybord = [
       },
     },
     {
-      className: 'ArrowRight special',
+      className: 'ArrowRight special arrow',
       enLg: {
         caps: ' → ',
         lowerCase: ' → ',

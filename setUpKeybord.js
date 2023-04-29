@@ -1,27 +1,7 @@
 import keybord from './keybord.js';
 
-const body = document.querySelector('.body');
 
-/* const enKeybord = {
-  firsSubRow: ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Delete'],
-  firstRow: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
-  secondRow: ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
-  thirdRow: ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Return'],
-  fourthRow: ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift'],
-  fifthRow: ['Fn', 'Control', 'Option', 'Command', ' ', 'Command', 'Option',
-   ' ↑ ', ' ← ', ' ↓ ', ' → '],
-};
-*/
-/* const ruKeybord = {
-  firsSubRow: ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Delete'],
-  firstRow: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
-  secondRow: ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
-  thirdRow: ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Return'],
-  fourthRow: ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Shift'],
-  fifthRow: ['Fn', 'Control', 'Option', 'Command', ' ', 'Command', 'Option',
-  ' ↑ ', ' ← ', ' ↓ ', ' → '],
-};
-*/
+const body = document.querySelector('.body');
 
 const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
@@ -30,9 +10,9 @@ const header = document.createElement('h1');
 header.className = 'header';
 header.innerHTML = 'RSS Virtual Keyboard';
 
-const textAria = document.createElement('textarea');
-textAria.className = 'text-wrapper';
-textAria.placeholder = 'I am new textAria look at me';
+const textArea = document.createElement('textarea');
+textArea.className = 'text-wrapper';
+textArea.placeholder = 'I am new textArea look at me';
 
 const keybordWrapper = document.createElement('div');
 keybordWrapper.className = 'keybord-wrapper';
@@ -47,12 +27,11 @@ discriptionLG.innerHTML = 'Для переключения языка комби
 
 body.insertAdjacentElement('afterbegin', wrapper);
 wrapper.insertAdjacentElement('afterbegin', header);
-wrapper.insertAdjacentElement('beforeend', textAria);
+wrapper.insertAdjacentElement('beforeend', textArea);
 wrapper.insertAdjacentElement('beforeend', keybordWrapper);
 wrapper.insertAdjacentElement('beforeend', discriptionOS);
 wrapper.insertAdjacentElement('beforeend', discriptionLG);
 
-// const rows = document.querySelectorAll('.keybord__row');
 let caps;
 let key;
 let enLg;
@@ -129,11 +108,6 @@ const createRow = function createRow(row) {
       }
     });
 
-    if (key.classList.contains('ArrowUp') || key.classList.contains('ArrowDown') ||
-      key.classList.contains('ArrowLeft') || key.classList.contains('ArrowRight')) {
-      key.classList.add('arrow');
-    }
-
     let isArrowWrapper = false;
 
     key.append(enLg, ruLg);
@@ -198,11 +172,30 @@ const upperCaseAll = document.querySelectorAll('.upper-case');
 const lowerCaseAll = document.querySelectorAll('.lower-case');
 const capsAll = document.querySelectorAll('.caps-lock');
 const shiftCapsAll = document.querySelectorAll('.shift-caps');
+const enLgAll = document.querySelectorAll('.enLg');
+const ruLgAll = document.querySelectorAll('.ruLg');
 let isCapsPressed;
+let isControlPressed;
+let isMetaPressed;
+// let isOptionPressed;
+
+function changeLeng() {
+  // if (e.key === 'Control' && e.key === 'Spase') {
+  console.log(enLg);
+  enLgAll.forEach((div) => {
+    div.classList.toggle('hide');
+  });
+  ruLgAll.forEach((div) => {
+    div.classList.toggle('hide');
+  });
+}
 
 function pressDown(e) {
   isCapsPressed = e.getModifierState('CapsLock');
-  console.log(e.getModifierState('Shift'));
+  isControlPressed = e.getModifierState('Control');
+  isMetaPressed = e.getModifierState('Meta');
+  // isOptionPressed = e.getModifierState('Alt');
+  console.log(e);
   keysAll.forEach((element) => {
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
@@ -220,6 +213,9 @@ function pressDown(e) {
             span.classList.add('hide');
           });
         } else if (e.key === 'Tab') {
+          e.preventDefault();
+          textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
+          textArea.focus();
           element.classList.add('active');
         } else if (e.key === 'CapsLock') {
           isCapsPressed = true;
@@ -235,12 +231,62 @@ function pressDown(e) {
           shiftCapsAll.forEach((span) => {
             span.classList.add('hide');
           });
+          if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
+            capsAll.forEach((span) => {
+              span.classList.add('hide');
+            });
+            lowerCaseAll.forEach((span) => {
+              span.classList.add('hide');
+            });
+            upperCaseAll.forEach((span) => {
+              span.classList.remove('hide');
+            });
+            shiftCapsAll.forEach((span) => {
+              span.classList.add('hide');
+            });
+          }
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          textArea.value += ' ↓ ';
+          element.classList.add('active');
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          textArea.value += ' ↑ ';
+          element.classList.add('active');
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          textArea.value += ' ← ';
+          element.classList.add('active');
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          textArea.value += ' → ';
+          element.classList.add('active');
+        } if (isControlPressed && isMetaPressed) {
+          changeLeng();
         }
         element.classList.add('active');
       }
+    } else if (element.classList.contains(e.code)) {
+      e.preventDefault()
+      element.classList.add('active');
+      const [activKey] = [...keysAll].filter((el) => el.classList.contains(e.code));
+      console.log(activKey);
+      const [activLg] = [...activKey.children].filter((el) => !el.classList.contains('hide'));
+      const activReg = activLg.children;
+      const [keySpan] = [...activReg].filter((el) => !el.classList.contains('hide'));
+      const keySpanValue = keySpan.textContent;
+    //    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
+    // const keySpan = keyContainer.children;
+    // keySpanValue = [...keySpan].filter((el) => !el.classList.contains('hide'));
+  
+      console.log(activLg);
+      console.log(activReg);
+      console.log(keySpan);
+      console.log(keySpanValue);
+      textArea.value += keySpanValue;
     }
   });
-  textAria.focus();
+  textArea.focus();
 }
 
 function pressUp(e) {
@@ -308,9 +354,115 @@ function pressUp(e) {
         }
         element.classList.remove('active');
       }
+    } else if (element.classList.contains(e.code)) {
+      element.classList.remove('active');
     }
   });
 }
 
+function clickDown(e) {
+  const {target} = e;
+  let keySpanValue;
+  if (target.closest('.key')) {
+    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
+    const keySpan = keyContainer.children;
+    keySpanValue = [...keySpan].filter((el) => !el.classList.contains('hide'));
+  }
+  return keySpanValue.textContent;
+}
+
+function clickUp(e) {
+  const target = e.target;
+
+}
+
 document.addEventListener('keydown', pressDown);
 document.addEventListener('keyup', pressUp);
+
+keybordWrapper.addEventListener('mousedown', (e) => {
+  textArea.focus();
+  const { target } = e;
+  if (target.closest('.key')) {
+    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
+    const keySpan = keyContainer.children;
+    const [keySpanValue] = [...keySpan].filter((el) => !el.classList.contains('hide'));
+    if (keySpanValue.textContent === 'caps lock') {
+      isCapsPressed = true;
+      target.closest('.key').classList.toggle('active');
+      console.log('capslock');
+      if (target.closest('.key').classList.contains('active')) {
+        capsAll.forEach((span) => {
+          span.classList.remove('hide');
+        });
+        lowerCaseAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        upperCaseAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        shiftCapsAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+      } else {
+        capsAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        lowerCaseAll.forEach((span) => {
+          span.classList.remove('hide');
+        });
+        upperCaseAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        shiftCapsAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+      }
+    } else if (keySpanValue.textContent === 'shift') {
+      target.closest('.key').classList.add('active');
+      capsAll.forEach((span) => {
+        span.classList.add('hide');
+      });
+      lowerCaseAll.forEach((span) => {
+        span.classList.add('hide');
+      });
+      upperCaseAll.forEach((span) => {
+        span.classList.remove('hide');
+      });
+      shiftCapsAll.forEach((span) => {
+        span.classList.add('hide');
+      });
+      if (target.closest('.key').classList.add('active') && isCapsPressed === true) {
+        capsAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        lowerCaseAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+        upperCaseAll.forEach((span) => {
+          span.classList.remove('hide');
+        });
+        shiftCapsAll.forEach((span) => {
+          span.classList.add('hide');
+        });
+      }
+    } else if (keySpanValue.textContent === 'return') {
+      textArea.value = `${textArea.value.substring(0, textArea.selectionStart)}\n${textArea.value.substring(textArea.selectionStart)}`;
+      textArea.value += '\n';
+    } else if (keySpanValue.textContent === 'delete') {
+      const start = textArea.selectionStart;
+      textArea.value = textArea.value.substring(0, textArea.selectionStart - 1)
+                     + textArea.value.substring(textArea.selectionStart);
+      textArea.selectionStart = start - 1;
+      textArea.selectionEnd = start - 1;
+    } else if (keySpanValue.textContent === 'tab') {
+      textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
+      textArea.focus();
+    } else if (keySpanValue.textContent === 'control') {
+      textArea.value += '';
+    } else if (keySpanValue.textContent === 'option') {
+      textArea.value += '';
+    } else if (keySpanValue.textContent === 'command') {
+      textArea.value += '';
+    } else textArea.value += keySpanValue.textContent;
+  }
+});
