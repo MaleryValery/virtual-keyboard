@@ -71,12 +71,12 @@
 }
 .key:active {
   transform: scale(0.97);
-  background-color: #827280;
+  background-color: #835d7e;
   cursor: pointer;
 }
 .key.active {
   transform: scale(0.97);
-  background-color: #827280;
+  background-color: #835d7e;
   cursor: pointer;
 }
 .key.special {

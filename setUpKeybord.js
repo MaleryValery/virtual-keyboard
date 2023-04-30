@@ -139,6 +139,9 @@ const capsAll = document.querySelectorAll('.caps-lock');
 const shiftCapsAll = document.querySelectorAll('.shift-caps');
 const enLgAll = document.querySelectorAll('.enLg');
 const ruLgAll = document.querySelectorAll('.ruLg');
+const shiftLeft = document.querySelector('.ShiftLeft');
+const shiftRight = document.querySelector('.ShiftRight');
+const capsLock = document.querySelector('.CapsLock');
 let langEn = true;
 let isCapsPressed;
 let isControlPressed;
@@ -167,6 +170,60 @@ function changeLeng() {
   }
 }
 
+function changeRegisterUp() {
+  capsAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+  lowerCaseAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+  upperCaseAll.forEach((span) => {
+    span.classList.remove('hide');
+  });
+  shiftCapsAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+}
+
+function changeRegisterDown() {
+  capsAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+  lowerCaseAll.forEach((span) => {
+    span.classList.remove('hide');
+  });
+  upperCaseAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+  shiftCapsAll.forEach((span) => {
+    span.classList.add('hide');
+  });
+}
+
+function changeCapsLock() {
+  if (isCapsPressed) {
+    capsAll.forEach((span) => {
+      span.classList.remove('hide');
+    });
+    lowerCaseAll.forEach((span) => {
+      span.classList.add('hide');
+    });
+    upperCaseAll.forEach((span) => {
+      span.classList.add('hide');
+    });
+    shiftCapsAll.forEach((span) => {
+      span.classList.add('hide');
+    });
+  }
+}
+
+function getKeyValue(event) {
+  const [keyContainer] = [...event.closest('.key').children].filter((el) => !el.classList.contains('hide'));
+  const keySpan = keyContainer.children;
+  const [keySpanValue] = [...keySpan].filter((el) => !el.classList.contains('hide'));
+  return keySpanValue;
+}
+
 function pressDown(e) {
   isCapsPressed = e.getModifierState('CapsLock');
   isControlPressed = e.getModifierState('Control');
@@ -177,71 +234,32 @@ function pressDown(e) {
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
         if (e.key === 'Shift') {
-          upperCaseAll.forEach((span) => {
-            span.classList.remove('hide');
-          });
-          lowerCaseAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          capsAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          shiftCapsAll.forEach((span) => {
-            span.classList.add('hide');
-          });
+          changeRegisterUp();
         } else if (e.key === 'Tab') {
           e.preventDefault();
           textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
-          element.classList.add('active');
         } else if (e.key === 'Space') {
           textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
-          element.classList.add('active');
         } else if (e.key === 'CapsLock') {
           isCapsPressed = true;
-          capsAll.forEach((span) => {
-            span.classList.remove('hide');
-          });
-          lowerCaseAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          upperCaseAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          shiftCapsAll.forEach((span) => {
-            span.classList.add('hide');
-          });
+          changeCapsLock();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
-            capsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            upperCaseAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
+            changeRegisterUp();
           }
         } else if (e.key === 'ArrowDown') {
           e.preventDefault();
           textArea.value += ' ↓ ';
-          element.classList.add('active');
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
           textArea.value += ' ↑ ';
-          element.classList.add('active');
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
           textArea.value += ' ← ';
-          element.classList.add('active');
         } else if (e.key === 'ArrowRight') {
           e.preventDefault();
           textArea.value += ' → ';
-          element.classList.add('active');
         } else if (isControlPressed && isMetaPressed) {
           changeLeng();
         }
@@ -251,11 +269,8 @@ function pressDown(e) {
       e.preventDefault();
       element.classList.add('active');
       const [activKey] = [...keysAll].filter((el) => el.classList.contains(e.code));
-      const [activLg] = [...activKey.children].filter((el) => !el.classList.contains('hide'));
-      const activReg = activLg.children;
-      const [keySpan] = [...activReg].filter((el) => !el.classList.contains('hide'));
-      const keySpanValue = keySpan.textContent;
-      textArea.value += keySpanValue;
+      const keySpanValue = getKeyValue(activKey);
+      textArea.value += keySpanValue.textContent;
     }
   });
   textArea.focus();
@@ -267,31 +282,9 @@ function pressUp(e) {
       if (element.classList.contains(e.code)) {
         if (e.key === 'Shift') {
           if (isCapsPressed === false) {
-            upperCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-            capsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
+            changeRegisterDown();
           } else {
-            upperCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            capsAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
+            changeCapsLock();
           }
         } else if (e.key === 'Tab') {
           element.classList.remove('active');
@@ -299,31 +292,9 @@ function pressUp(e) {
           element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
           isCapsPressed = false;
-          capsAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          lowerCaseAll.forEach((span) => {
-            span.classList.remove('hide');
-          });
-          upperCaseAll.forEach((span) => {
-            span.classList.add('hide');
-          });
-          shiftCapsAll.forEach((span) => {
-            span.classList.add('hide');
-          });
+          changeRegisterDown();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
-            capsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            lowerCaseAll.forEach((span) => {
-              span.classList.add('hide');
-            });
-            upperCaseAll.forEach((span) => {
-              span.classList.remove('hide');
-            });
-            shiftCapsAll.forEach((span) => {
-              span.classList.add('hide');
-            });
+            changeRegisterUp();
           }
         }
         element.classList.remove('active');
@@ -339,69 +310,31 @@ document.addEventListener('keyup', pressUp);
 
 keybordWrapper.addEventListener('mousedown', (e) => {
   textArea.focus();
-  const { target } = e;
+  const {
+    target
+  } = e;
   if (target.closest('.key')) {
-    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
-    const keySpan = keyContainer.children;
-    const [keySpanValue] = [...keySpan].filter((el) => !el.classList.contains('hide'));
+    const keySpanValue = getKeyValue(target);
     if (keySpanValue.textContent === 'caps lock') {
-      isCapsPressed = true;
-      target.closest('.key').classList.toggle('active');
-      console.log('capslock');
-      if (target.closest('.key').classList.contains('active')) {
-        capsAll.forEach((span) => {
-          span.classList.remove('hide');
-        });
-        lowerCaseAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        upperCaseAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        shiftCapsAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-      } else {
-        capsAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        lowerCaseAll.forEach((span) => {
-          span.classList.remove('hide');
-        });
-        upperCaseAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        shiftCapsAll.forEach((span) => {
-          span.classList.add('hide');
-        });
+      textArea.value += '';
+    //  isCapsPressed = true;
+      capsLock.classList.toggle('active');
+      console.log('capslock', target);
+      if (capsLock.classList.contains('active')) {
+        changeCapsLock();
+        if (shiftLeft.classList.contains('active') || shiftRight.classList.contains('active')) {
+          changeRegisterUp();
+        }
+      } else if (shiftLeft.classList.contains('active') || shiftRight.classList.contains('active')) {
+        changeRegisterUp();
+      } else if (!capsLock.classList.contains('active') && !shiftLeft.classList.contains('active') && !shiftRight.classList.contains('active')) {
+        changeRegisterDown();
       }
     } else if (keySpanValue.textContent === 'shift') {
       target.closest('.key').classList.add('active');
-      capsAll.forEach((span) => {
-        span.classList.add('hide');
-      });
-      lowerCaseAll.forEach((span) => {
-        span.classList.add('hide');
-      });
-      upperCaseAll.forEach((span) => {
-        span.classList.remove('hide');
-      });
-      shiftCapsAll.forEach((span) => {
-        span.classList.add('hide');
-      });
-      if (target.closest('.key').classList.add('active') && isCapsPressed === true) {
-        capsAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        lowerCaseAll.forEach((span) => {
-          span.classList.add('hide');
-        });
-        upperCaseAll.forEach((span) => {
-          span.classList.remove('hide');
-        });
-        shiftCapsAll.forEach((span) => {
-          span.classList.add('hide');
-        });
+      changeRegisterUp();
+      if (target.closest('.key').classList.add('active') && capsLock.classList.contains('active')) {
+        changeRegisterUp();
       }
     } else if (keySpanValue.textContent === 'return') {
       textArea.value = `${textArea.value.substring(0, textArea.selectionStart)}\n${textArea.value.substring(textArea.selectionStart)}`;
@@ -427,6 +360,21 @@ keybordWrapper.addEventListener('mousedown', (e) => {
   }
 });
 
+keybordWrapper.addEventListener('mouseup', (e) => {
+  const { target } = e;
+  if (target.closest('.key')) {
+    const keySpanValue = getKeyValue(target);
+    if (keySpanValue.textContent === 'shift') {
+      target.closest('.key').classList.remove('active');
+      if (!capsLock.classList.contains('active') && !shiftLeft.classList.contains('active') && !shiftRight.classList.contains('active')) {
+        changeRegisterDown();
+      }
+      if (capsLock.classList.contains('active')) {
+        changeCapsLock();
+      } else changeRegisterDown();
+    }
+  }
+});
 document.addEventListener('DOMContentLoaded', () => {
   if (JSON.parse(localStorage.getItem('langEn'))) {
     langEn = false;
