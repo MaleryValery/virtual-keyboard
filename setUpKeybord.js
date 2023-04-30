@@ -133,12 +133,12 @@ const createKeybord = function createKeybord(nodeElem, arr) {
 createKeybord(keybordWrapper, keybord);
 
 const keysAll = document.querySelectorAll('.key');
-const upperCaseAll = document.querySelectorAll('.upper-case');
-const lowerCaseAll = document.querySelectorAll('.lower-case');
-const capsAll = document.querySelectorAll('.caps-lock');
-const shiftCapsAll = document.querySelectorAll('.shift-caps');
 const enLgAll = document.querySelectorAll('.enLg');
 const ruLgAll = document.querySelectorAll('.ruLg');
+const capsAll = document.querySelectorAll('.caps-lock');
+const upperCaseAll = document.querySelectorAll('.upper-case');
+const lowerCaseAll = document.querySelectorAll('.lower-case');
+const shiftCapsAll = document.querySelectorAll('.shift-caps');
 const shiftLeft = document.querySelector('.ShiftLeft');
 const shiftRight = document.querySelector('.ShiftRight');
 const capsLock = document.querySelector('.CapsLock');
@@ -146,7 +146,6 @@ let langEn = true;
 let isCapsPressed;
 let isControlPressed;
 let isMetaPressed;
-// let isOptionPressed;
 
 function changeLeng() {
   if (langEn) {
@@ -228,8 +227,6 @@ function pressDown(e) {
   isCapsPressed = e.getModifierState('CapsLock');
   isControlPressed = e.getModifierState('Control');
   isMetaPressed = e.getModifierState('Meta');
-  // isOptionPressed = e.getModifierState('Alt');
-  console.log(e);
   keysAll.forEach((element) => {
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
@@ -310,16 +307,12 @@ document.addEventListener('keyup', pressUp);
 
 keybordWrapper.addEventListener('mousedown', (e) => {
   textArea.focus();
-  const {
-    target
-  } = e;
+  const { target } = e;
   if (target.closest('.key')) {
     const keySpanValue = getKeyValue(target);
     if (keySpanValue.textContent === 'caps lock') {
       textArea.value += '';
-    //  isCapsPressed = true;
       capsLock.classList.toggle('active');
-      console.log('capslock', target);
       if (capsLock.classList.contains('active')) {
         changeCapsLock();
         if (shiftLeft.classList.contains('active') || shiftRight.classList.contains('active')) {
@@ -341,8 +334,8 @@ keybordWrapper.addEventListener('mousedown', (e) => {
       textArea.value += '\n';
     } else if (keySpanValue.textContent === 'delete') {
       const start = textArea.selectionStart;
-      textArea.value = textArea.value.substring(0, textArea.selectionStart - 1) +
-        textArea.value.substring(textArea.selectionStart);
+      textArea.value = textArea.value.substring(0, textArea.selectionStart - 1)
+      + textArea.value.substring(textArea.selectionStart);
       textArea.selectionStart = start - 1;
       textArea.selectionEnd = start - 1;
     } else if (keySpanValue.textContent === 'tab') {
@@ -375,6 +368,7 @@ keybordWrapper.addEventListener('mouseup', (e) => {
     }
   }
 });
+
 document.addEventListener('DOMContentLoaded', () => {
   if (JSON.parse(localStorage.getItem('langEn'))) {
     langEn = false;
