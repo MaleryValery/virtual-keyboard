@@ -240,23 +240,22 @@ function pressDown(e) {
           textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
         } else if (e.key === 'CapsLock') {
-          isCapsPressed = true;
           changeCapsLock();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
           }
         } else if (e.key === 'ArrowDown') {
           e.preventDefault();
-          textArea.value += ' ↓ ';
+          textArea.value += '↓';
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
-          textArea.value += ' ↑ ';
+          textArea.value += '↑';
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          textArea.value += ' ← ';
+          textArea.value += '←';
         } else if (e.key === 'ArrowRight') {
           e.preventDefault();
-          textArea.value += ' → ';
+          textArea.value += '→';
         } else if (isControlPressed && isMetaPressed) {
           changeLeng();
         }
@@ -278,7 +277,7 @@ function pressUp(e) {
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
         if (e.key === 'Shift') {
-          if (isCapsPressed === false) {
+          if (!capsLock.classList.contains('active')) {
             changeRegisterDown();
           } else {
             changeCapsLock();
@@ -288,7 +287,7 @@ function pressUp(e) {
         } else if (e.key === 'Space') {
           element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
-          isCapsPressed = false;
+          capsLock.classList.remove('active');
           changeRegisterDown();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
