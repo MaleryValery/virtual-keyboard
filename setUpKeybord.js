@@ -1,6 +1,5 @@
 import keybord from './keybord.js';
 
-
 const body = document.querySelector('.body');
 
 const wrapper = document.createElement('div');
@@ -133,40 +132,6 @@ const createKeybord = function createKeybord(nodeElem, arr) {
 
 createKeybord(keybordWrapper, keybord);
 
-// function addAttribute(keysArr) {
-//   keysArr.forEach((element, i) => {
-//     // console.log(element, i);
-//     if (element.firstChild.innerHTML === 'Shift') {
-//       element.setAttribute('dataname', i === 55 ? 'ShiftLeft' : 'ShiftRight');
-//     } else if (element.firstChild.innerHTML === ' ') {
-//       element.setAttribute('dataname', 'Space');
-//     } else if (element.firstChild.innerHTML === 'Return') {
-//       element.setAttribute('dataname', 'Enter');
-//     } else if (element.firstChild.innerHTML === 'Delete') {
-//       element.setAttribute('dataname', 'Backspace');
-//     } else if (element.firstChild.innerHTML === 'Control') {
-//       element.setAttribute('dataname', 'ControlLeft');
-//     } else if (element.firstChild.innerHTML === 'Command') {
-//       element.setAttribute('dataname', i === 70 ? 'MetaLeft' : 'MetaRight');
-//     } else if (element.firstChild.innerHTML === 'Option') {
-//       element.setAttribute('dataname', i === 69 ? 'AltLeft' : 'AltRight');
-//     } else if (element.firstChild.innerHTML === ' ↑ ') {
-//       element.setAttribute('dataname', 'ArrowUp');
-//     } else if (element.firstChild.innerHTML === ' ← ') {
-//       element.setAttribute('dataname', 'ArrowLeft');
-//     } else if (element.firstChild.innerHTML === ' ↓ ') {
-//       element.setAttribute('dataname', 'ArrowDown');
-//     } else if (element.firstChild.innerHTML === ' → ') {
-//       element.setAttribute('dataname', 'ArrowRight');
-//     } else if (element.classList.contains('special')) {
-//       element.setAttribute('dataname', `${element.firstChild.innerHTML}`);
-//     } else {
-//       element.setAttribute('dataname', `${element.firstChild.innerHTML.toLowerCase()}`);
-//     }
-//   });
-// }
-
-// addAttribute(keysAll);
 const keysAll = document.querySelectorAll('.key');
 const upperCaseAll = document.querySelectorAll('.upper-case');
 const lowerCaseAll = document.querySelectorAll('.lower-case');
@@ -174,20 +139,32 @@ const capsAll = document.querySelectorAll('.caps-lock');
 const shiftCapsAll = document.querySelectorAll('.shift-caps');
 const enLgAll = document.querySelectorAll('.enLg');
 const ruLgAll = document.querySelectorAll('.ruLg');
+let langEn = true;
 let isCapsPressed;
 let isControlPressed;
 let isMetaPressed;
 // let isOptionPressed;
 
 function changeLeng() {
-  // if (e.key === 'Control' && e.key === 'Spase') {
-  console.log(enLg);
-  enLgAll.forEach((div) => {
-    div.classList.toggle('hide');
-  });
-  ruLgAll.forEach((div) => {
-    div.classList.toggle('hide');
-  });
+  if (langEn) {
+    enLgAll.forEach((div) => {
+      div.classList.add('hide');
+    });
+    ruLgAll.forEach((div) => {
+      div.classList.remove('hide');
+    });
+    langEn = false;
+    localStorage.setItem('langEn', 'false');
+  } else {
+    enLgAll.forEach((div) => {
+      div.classList.remove('hide');
+    });
+    ruLgAll.forEach((div) => {
+      div.classList.add('hide');
+    });
+    langEn = true;
+    localStorage.setItem('langEn', 'true');
+  }
 }
 
 function pressDown(e) {
@@ -215,6 +192,10 @@ function pressDown(e) {
         } else if (e.key === 'Tab') {
           e.preventDefault();
           textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
+          textArea.focus();
+          element.classList.add('active');
+        } else if (e.key === 'Space') {
+          textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
           element.classList.add('active');
         } else if (e.key === 'CapsLock') {
@@ -261,28 +242,19 @@ function pressDown(e) {
           e.preventDefault();
           textArea.value += ' → ';
           element.classList.add('active');
-        } if (isControlPressed && isMetaPressed) {
+        } else if (isControlPressed && isMetaPressed) {
           changeLeng();
         }
         element.classList.add('active');
       }
     } else if (element.classList.contains(e.code)) {
-      e.preventDefault()
+      e.preventDefault();
       element.classList.add('active');
       const [activKey] = [...keysAll].filter((el) => el.classList.contains(e.code));
-      console.log(activKey);
       const [activLg] = [...activKey.children].filter((el) => !el.classList.contains('hide'));
       const activReg = activLg.children;
       const [keySpan] = [...activReg].filter((el) => !el.classList.contains('hide'));
       const keySpanValue = keySpan.textContent;
-    //    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
-    // const keySpan = keyContainer.children;
-    // keySpanValue = [...keySpan].filter((el) => !el.classList.contains('hide'));
-  
-      console.log(activLg);
-      console.log(activReg);
-      console.log(keySpan);
-      console.log(keySpanValue);
       textArea.value += keySpanValue;
     }
   });
@@ -323,6 +295,8 @@ function pressUp(e) {
           }
         } else if (e.key === 'Tab') {
           element.classList.remove('active');
+        } else if (e.key === 'Space') {
+          element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
           isCapsPressed = false;
           capsAll.forEach((span) => {
@@ -358,22 +332,6 @@ function pressUp(e) {
       element.classList.remove('active');
     }
   });
-}
-
-function clickDown(e) {
-  const {target} = e;
-  let keySpanValue;
-  if (target.closest('.key')) {
-    const [keyContainer] = [...target.closest('.key').children].filter((el) => !el.classList.contains('hide'));
-    const keySpan = keyContainer.children;
-    keySpanValue = [...keySpan].filter((el) => !el.classList.contains('hide'));
-  }
-  return keySpanValue.textContent;
-}
-
-function clickUp(e) {
-  const target = e.target;
-
 }
 
 document.addEventListener('keydown', pressDown);
@@ -450,13 +408,15 @@ keybordWrapper.addEventListener('mousedown', (e) => {
       textArea.value += '\n';
     } else if (keySpanValue.textContent === 'delete') {
       const start = textArea.selectionStart;
-      textArea.value = textArea.value.substring(0, textArea.selectionStart - 1)
-                     + textArea.value.substring(textArea.selectionStart);
+      textArea.value = textArea.value.substring(0, textArea.selectionStart - 1) +
+        textArea.value.substring(textArea.selectionStart);
       textArea.selectionStart = start - 1;
       textArea.selectionEnd = start - 1;
     } else if (keySpanValue.textContent === 'tab') {
       textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
       textArea.focus();
+    } else if (keySpanValue.textContent === ' ') {
+      textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
     } else if (keySpanValue.textContent === 'control') {
       textArea.value += '';
     } else if (keySpanValue.textContent === 'option') {
@@ -464,5 +424,15 @@ keybordWrapper.addEventListener('mousedown', (e) => {
     } else if (keySpanValue.textContent === 'command') {
       textArea.value += '';
     } else textArea.value += keySpanValue.textContent;
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (JSON.parse(localStorage.getItem('langEn'))) {
+    langEn = false;
+    changeLeng();
+  } else {
+    langEn = true;
+    changeLeng();
   }
 });
