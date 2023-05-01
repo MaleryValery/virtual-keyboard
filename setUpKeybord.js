@@ -240,6 +240,7 @@ function pressDown(e) {
           textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
         } else if (e.key === 'CapsLock') {
+          element.classList.toggle('active');
           changeCapsLock();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
@@ -287,7 +288,6 @@ function pressUp(e) {
         } else if (e.key === 'Space') {
           element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
-          capsLock.classList.remove('active');
           changeRegisterDown();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
