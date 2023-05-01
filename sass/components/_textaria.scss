@@ -1,9 +1,12 @@
 .text-wrapper{
     display: block;
     padding: 1rem;
-    height: 20vh;
+    height: 15vh;
     border-radius: 1rem;
-    border: 2px solid #aaa;
+    border: none;
+    background: lighten(#F2E5E5,1%);
+    width: 90%;
+    align-self: center;
 
     &:focus-visible{
         outline: none;

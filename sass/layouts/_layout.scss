@@ -1,40 +1,4 @@
-.key {
-    width: 6%;
-    background-color: #51424F;
-    color: #FEFEDF;
-    border-radius: 4px;
-    transition: all 0.3s;
-    display: flex;
-    padding: 0.8rem 0.5rem;
 
-    &:hover {
-        background-color: #827280;
-        cursor: pointer;
-    }
-
-    &:active {
-        transform: scale(0.97);
-        background-color: #835d7e;
-        cursor: pointer;
-    }
-
-    &.active {
-        transform: scale(0.97);
-        background-color: #835d7e;
-        cursor: pointer;
-    }
-
-    &.special {
-        flex-grow: 1;
-        font-size: 1.1rem;
-        align-items: end;
-        letter-spacing: 0.5px;
-    }
-
-    &.arrow {
-        flex-grow: 0;
-    }
-}
 .keybord__row:nth-child(2){
     .key{
         flex-grow: 0;
@@ -52,29 +16,25 @@
         flex-basis: 4%;
     }
 
-    .key.special:nth-child(1) {
-        flex-basis: 4%;
+    .key.special.Fn:nth-child(1) {
+        flex-basis: 2.8rem;
     }
 
     .key.special:nth-child(2) {
+        flex-basis: 4%;
+    }
+    .key.special:nth-child(3) {
         flex-basis: 3%;
     }
-
-    .key.special:nth-child(3) {
+    .key.special:nth-child(4) {
         flex-basis: 6%;
     }
     .key.special:nth-child(5) {
-        flex-basis: 6%;
-    }
-    .key.special:nth-child(4) {
-        flex-basis: 18rem;
+        flex-basis: 15rem;
     }
     .key.special:nth-child(6) {
-        flex-basis: 3%;
+        flex-basis: 6%;
     }
-    // &.upper-case{
-    //     text-transform: lowercase;
-    // }
 }
 
 .keybord__row:not(:last-child) {
@@ -101,27 +61,3 @@
     width: 20%;
     gap: 0.3rem;
 }
-
-.arrow {
-    justify-content: center;
-    align-items: center;
-    padding: 0.2rem;
-    height: 1.8rem;
-    width: 90%;
-
-    &:first-child {
-        grid-column: 2/3;
-        grid-row: 1/2;
-    }
-
-    &:not(:first-child) {
-        grid-row: 2/2;
-    }
-}
-
-// .upper-case{
-//     text-transform: uppercase;
-// }
-// .lower-case{
-//     text-transform: lowercase;
-// }
