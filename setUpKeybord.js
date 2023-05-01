@@ -18,11 +18,11 @@ keybordWrapper.className = 'keybord-wrapper';
 
 const discriptionOS = document.createElement('p');
 discriptionOS.className = 'discription';
-discriptionOS.innerHTML = 'Клавиатура создана в операционной системе macOS.';
+discriptionOS.innerHTML = 'Keyboard was created on macOS operating system.';
 
 const discriptionLG = document.createElement('p');
 discriptionLG.className = 'discription';
-discriptionLG.innerHTML = 'Для переключения языка комбинация: левыe control + space.';
+discriptionLG.innerHTML = 'To switch language: left control + command.';
 
 body.insertAdjacentElement('afterbegin', wrapper);
 wrapper.insertAdjacentElement('afterbegin', header);
@@ -143,7 +143,6 @@ const shiftLeft = document.querySelector('.ShiftLeft');
 const shiftRight = document.querySelector('.ShiftRight');
 const capsLock = document.querySelector('.CapsLock');
 let langEn = true;
-let isCapsPressed;
 let isControlPressed;
 let isMetaPressed;
 
@@ -200,7 +199,7 @@ function changeRegisterDown() {
 }
 
 function changeCapsLock() {
-  if (isCapsPressed) {
+  if (capsLock.classList.contains('active')) {
     capsAll.forEach((span) => {
       span.classList.remove('hide');
     });
@@ -234,7 +233,7 @@ function pressDown(e) {
           changeRegisterUp();
         } else if (e.key === 'Tab') {
           e.preventDefault();
-          textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
+          textArea.setRangeText('\t', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
         } else if (e.key === 'Space') {
           textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
@@ -338,7 +337,7 @@ keybordWrapper.addEventListener('mousedown', (e) => {
       textArea.selectionStart = start - 1;
       textArea.selectionEnd = start - 1;
     } else if (keySpanValue.textContent === 'tab') {
-      textArea.setRangeText('   ', textArea.selectionStart, textArea.selectionEnd, 'end');
+      textArea.setRangeText('\t', textArea.selectionStart, textArea.selectionEnd, 'end');
       textArea.focus();
     } else if (keySpanValue.textContent === ' ') {
       textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
@@ -348,6 +347,12 @@ keybordWrapper.addEventListener('mousedown', (e) => {
       textArea.value += '';
     } else if (keySpanValue.textContent === 'command') {
       textArea.value += '';
+    } else if (keySpanValue.textContent === 'EN') {
+      textArea.value += '';
+      changeLeng();
+    } else if (keySpanValue.textContent === 'RU') {
+      textArea.value += '';
+      changeLeng();
     } else textArea.value += keySpanValue.textContent;
   }
 });
