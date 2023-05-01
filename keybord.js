@@ -250,7 +250,7 @@ const keybord = [
         shiftCaps: 'W',
       },
       ruLg: {
-        caps: 'Й',
+        caps: 'Ц',
         lowerCase: 'ц',
         upperCase: 'Ц',
         shiftCaps: 'Ц',
