@@ -143,6 +143,7 @@ const shiftLeft = document.querySelector('.ShiftLeft');
 const shiftRight = document.querySelector('.ShiftRight');
 const capsLock = document.querySelector('.CapsLock');
 let langEn = true;
+let isCapsPressed;
 let isControlPressed;
 let isMetaPressed;
 
@@ -199,7 +200,7 @@ function changeRegisterDown() {
 }
 
 function changeCapsLock() {
-  if (capsLock.classList.contains('active')) {
+  if (capsLock.classList.contains('active') || isCapsPressed) {
     capsAll.forEach((span) => {
       span.classList.remove('hide');
     });
