@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.html {
+  font-size: 62.5%;
+}
+
+.body {
+  height: 100vh;
+  margin: auto;
+  padding: 5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.6rem;
+  background-image: linear-gradient(to right bottom, #f2d7d9, #eed5db, #e9d3dd, #e3d1de, #dcd0df, #d2c9db, #c8c3d6, #bdbdd1, #acb0c7, #9aa4bc, #8798b1, #748da6);
+  user-select: none;
+  -youbkit-touch-callout: none;
+  -youbkit-user-select: none;
+  -moz-user-select: none;
+  tab-size: 4;
+  -o-tab-size: 4;
+  -moz-tab-size: 4;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 67rem;
+  margin: auto;
+}
+
+.header {
+  margin: 0 auto;
+  color: #FDF4F5;
+}
+
+.keybord-wrapper {
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #F2E5E5;
+}
+
+.discription {
+  margin: 0 auto;
+  color: #FDF4F5;
+}
+
+.key {
+  width: 6%;
+  background-color: #BA90C6;
+  color: #FDF4F5;
+  border-radius: 4px;
+  transition: all 0.3s;
+  display: flex;
+  padding: 0.8rem 0.5rem;
+}
+.key:hover {
+  background-color: #b07fbd;
+  cursor: pointer;
+}
+.key:active {
+  transform: scale(0.97);
+  background-color: #a56eb5;
+  cursor: pointer;
+}
+.key.active {
+  transform: scale(0.97);
+  background-color: #a56eb5;
+  cursor: pointer;
+}
+.key.special {
+  font-weight: 500;
+  color: #6e1b3f;
+  background: #E8A0BF;
+  flex-grow: 1;
+  font-size: 1.1rem;
+  align-items: end;
+  letter-spacing: 0.5px;
+}
+.key.special:hover {
+  background-color: #e594b7;
+  cursor: pointer;
+}
+.key.special:active {
+  transform: scale(0.97);
+  background-color: #e07fa9;
+  cursor: pointer;
+}
+.key.special.active {
+  transform: scale(0.97);
+  background-color: #e07fa9;
+  cursor: pointer;
+}
+.key.arrow, .key.Fn {
+  color: #56345d;
+  background-color: #d2b8d8;
+  flex-grow: 0;
+}
+.key.arrow:hover, .key.Fn:hover {
+  background-color: #d2b8d8;
+  cursor: pointer;
+}
+.key.arrow:active, .key.Fn:active {
+  transform: scale(0.97);
+  background-color: #be97c6;
+  cursor: pointer;
+}
+.key.arrow.active, .key.Fn.active {
+  transform: scale(0.97);
+  background-color: #be97c6;
+  cursor: pointer;
+}
+
+.arrow {
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+  height: 1.8rem;
+  width: 90%;
+}
+.arrow:first-child {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+.arrow:not(:first-child) {
+  grid-row: 2/2;
+}
+
+.text-wrapper {
+  display: block;
+  padding: 1rem;
+  height: 15vh;
+  border-radius: 1rem;
+  border: none;
+  background: #f4e8e8;
+  width: 90%;
+  align-self: center;
+}
+.text-wrapper:focus-visible {
+  outline: none;
+}
+
+.keybord__row:nth-child(2) .key {
+  flex-grow: 0;
+  flex-basis: 6.1%;
+}
+.keybord__row:nth-child(2) .key.special {
+  flex-grow: 1;
+  flex-basis: 6%;
+}
+
+.keybord__row:last-child .key.special:nth-child(7) {
+  flex-basis: 4%;
+}
+.keybord__row:last-child .key.special.Fn:nth-child(1) {
+  flex-basis: 2.8rem;
+}
+.keybord__row:last-child .key.special:nth-child(2) {
+  flex-basis: 4%;
+}
+.keybord__row:last-child .key.special:nth-child(3) {
+  flex-basis: 3%;
+}
+.keybord__row:last-child .key.special:nth-child(4) {
+  flex-basis: 6%;
+}
+.keybord__row:last-child .key.special:nth-child(5) {
+  flex-basis: 15rem;
+}
+.keybord__row:last-child .key.special:nth-child(6) {
+  flex-basis: 6%;
+}
+
+.keybord__row:not(:last-child) .key.special:last-child {
+  justify-content: right;
+}
+
+.keybord__row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.hide {
+  display: none;
+}
+
+.arrow-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 20%;
+  gap: 0.3rem;
+}
+
+/*# sourceMappingURL=style.css.map */
