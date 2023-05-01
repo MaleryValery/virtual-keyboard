@@ -246,16 +246,16 @@ function pressDown(e) {
           }
         } else if (e.key === 'ArrowDown') {
           e.preventDefault();
-          textArea.value += '↓';
+          textArea.setRangeText('↓', textArea.selectionStart, textArea.selectionEnd, 'end');
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
-          textArea.value += '↑';
+          textArea.setRangeText('↑', textArea.selectionStart, textArea.selectionEnd, 'end');
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          textArea.value += '←';
+          textArea.setRangeText('←', textArea.selectionStart, textArea.selectionEnd, 'end');
         } else if (e.key === 'ArrowRight') {
           e.preventDefault();
-          textArea.value += '→';
+          textArea.setRangeText('→', textArea.selectionStart, textArea.selectionEnd, 'end');
         } else if (isControlPressed && isMetaPressed) {
           changeLeng();
         }
@@ -266,7 +266,7 @@ function pressDown(e) {
       element.classList.add('active');
       const [activKey] = [...keysAll].filter((el) => el.classList.contains(e.code));
       const keySpanValue = getKeyValue(activKey);
-      textArea.value += keySpanValue.textContent;
+      textArea.setRangeText(`${keySpanValue.textContent}`, textArea.selectionStart, textArea.selectionEnd, 'end');
     }
   });
   textArea.focus();
@@ -342,6 +342,18 @@ keybordWrapper.addEventListener('mousedown', (e) => {
       textArea.focus();
     } else if (keySpanValue.textContent === ' ') {
       textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
+    } else if (keySpanValue.textContent === '↓') {
+      e.preventDefault();
+      textArea.setRangeText('↓', textArea.selectionStart, textArea.selectionEnd, 'end');
+    } else if (keySpanValue.textContent === '↑') {
+      e.preventDefault();
+      textArea.setRangeText('↑', textArea.selectionStart, textArea.selectionEnd, 'end');
+    } else if (keySpanValue.textContent === '←') {
+      e.preventDefault();
+      textArea.setRangeText('←', textArea.selectionStart, textArea.selectionEnd, 'end');
+    } else if (keySpanValue.textContent === '→') {
+      e.preventDefault();
+      textArea.setRangeText('→', textArea.selectionStart, textArea.selectionEnd, 'end');
     } else if (keySpanValue.textContent === 'control') {
       textArea.value += '';
     } else if (keySpanValue.textContent === 'option') {
@@ -354,7 +366,7 @@ keybordWrapper.addEventListener('mousedown', (e) => {
     } else if (keySpanValue.textContent === 'RU') {
       textArea.value += '';
       changeLeng();
-    } else textArea.value += keySpanValue.textContent;
+    } else textArea.setRangeText(`${keySpanValue.textContent}`, textArea.selectionStart, textArea.selectionEnd, 'end');
   }
 });
 
