@@ -800,6 +800,21 @@ const keybord = [
     },
   ], [
     {
+      className: 'Fn special leng',
+      enLg: {
+        caps: 'EN',
+        lowerCase: 'EN',
+        upperCase: 'EN',
+        shiftCaps: 'EN',
+      },
+      ruLg: {
+        caps: 'RU',
+        lowerCase: 'RU',
+        upperCase: 'RU',
+        shiftCaps: 'RU',
+      },
+    },
+    {
       className: 'ControlLeft special',
       enLg: {
         caps: 'control',
