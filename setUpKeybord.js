@@ -240,10 +240,8 @@ function pressDown(e) {
           textArea.setRangeText(' ', textArea.selectionStart, textArea.selectionEnd, 'end');
           textArea.focus();
         } else if (e.key === 'CapsLock') {
-          if (isCapsPressed) {
-            element.classList.add('active');
-            changeCapsLock();
-          }
+          element.classList.toggle('active');
+          changeCapsLock();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
           }
@@ -277,7 +275,6 @@ function pressDown(e) {
 
 function pressUp(e) {
   keysAll.forEach((element) => {
-    isCapsPressed = e.getModifierState('CapsLock');
     if (element.classList.contains('special')) {
       if (element.classList.contains(e.code)) {
         if (e.key === 'Shift') {
@@ -291,10 +288,7 @@ function pressUp(e) {
         } else if (e.key === 'Space') {
           element.classList.remove('active');
         } else if (e.key === 'CapsLock') {
-          if (!isCapsPressed) {
-            element.classList.remove('active');
-            changeRegisterDown();
-          }
+          changeRegisterDown();
           if (e.key === 'CapsLock' && e.getModifierState('Shift')) {
             changeRegisterUp();
           }
